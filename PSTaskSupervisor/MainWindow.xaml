@@ -32,11 +32,15 @@
         <DataGrid Grid.Row="1"
                   VerticalAlignment="Stretch"
                   Margin="5,5,5,5"
-                  ItemsSource="{Binding Scripts}">
-            <DataGrid.Columns>
+                  ItemsSource="{Binding Scripts}"
+                  AutoGenerateColumns="True"
+                  CanUserAddRows="False"
+                  CanUserDeleteRows="False"
+                  IsReadOnly="True">
+            <!--<DataGrid.Columns>
                 <DataGridTextColumn Header="Script name" Binding="{Binding Name}" Width="*"/>
                 <DataGridTextColumn Header="Interval" Binding="{Binding Interval}" Width="auto" />
-            </DataGrid.Columns>
+            </DataGrid.Columns>-->
         </DataGrid> 
     </Grid>
 </Window>

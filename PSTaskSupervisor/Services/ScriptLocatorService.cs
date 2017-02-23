@@ -52,14 +52,15 @@ namespace PSTaskSupervisor.Services
 
         private T ParseInfoLine<T>(IEnumerable<string> infoLines, string valueName, Func<string, T> valueExtractor)
         {
-            var line = infoLines.FirstOrDefault(l => l.ToLower().StartsWith($"#{l.ToLower()}:"));
+            var line = infoLines.FirstOrDefault(l => l.ToLower().StartsWith($"#{valueName.ToLower()}:"));
             if (line == null)
             {
                 return default(T);
             }
 
-            var parts = line.Split(':');
-            return valueExtractor(parts.Length == 2 ? parts[1].Trim() : "");
+            var parts = line.Split(':').Select(t => t.Trim());
+            var secondHalf = string.Join(":", parts.Skip(1));
+            return valueExtractor(secondHalf);
         }
     }
 }

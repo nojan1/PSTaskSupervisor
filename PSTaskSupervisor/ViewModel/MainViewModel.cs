@@ -29,6 +29,11 @@ namespace PSTaskSupervisor.ViewModel
         public MainViewModel(ScriptLocatorService scriptLocatorService)
         {
             this.scriptLocatorService = scriptLocatorService;
+
+            scriptLocatorService.OnScriptsUpdated += x =>
+            {
+                Scripts = new ObservableCollection<PowershellScript>(x);
+            };
         }
     }
 }
