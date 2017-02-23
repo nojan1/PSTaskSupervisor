@@ -4,9 +4,39 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PSTaskSupervisor"
+        xmlns:cmd="clr-namespace:GalaSoft.MvvmLight.Command;assembly=GalaSoft.MvvmLight.Platform"
+        xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
         mc:Ignorable="d"
-        Title="MainWindow" Height="350" Width="525">
+        Title="Powershell Task Supervisor" Height="350" Width="525"
+        DataContext="{Binding Source={StaticResource Locator}, Path=Main}">
+
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <cmd:EventToCommand Command="{Binding Mode=OneWay, Path=LoadScripts}"
+                            PassEventArgsToCommand="True" />
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
+
     <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <ToolBar Grid.Row="0">
+            <ToolBarPanel>
+                <Button>Hello</Button>
+            </ToolBarPanel>
+        </ToolBar>
         
+        <DataGrid Grid.Row="1"
+                  VerticalAlignment="Stretch"
+                  Margin="5,5,5,5"
+                  ItemsSource="{Binding Scripts}">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Script name" Binding="{Binding Name}" Width="*"/>
+                <DataGridTextColumn Header="Interval" Binding="{Binding Interval}" Width="auto" />
+            </DataGrid.Columns>
+        </DataGrid> 
     </Grid>
 </Window>
