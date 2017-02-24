@@ -47,7 +47,8 @@ namespace PSTaskSupervisor.Services
                     {
                         Path = scriptFilePath,
                         Name = new FileInfo(scriptFilePath).Name,
-                        Interval = interval.Value
+                        Interval = interval.Value,
+                        LastRun = KnownScripts?.FirstOrDefault(s => s.Path == scriptFilePath)?.LastRun
                     });
                 }
             });

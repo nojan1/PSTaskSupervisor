@@ -26,23 +26,25 @@
         </Grid.RowDefinitions>
 
         <ToolBar Grid.Row="0">
-            <ToolBarPanel>
-                <Button>Hello</Button>
-            </ToolBarPanel>
+            <Button Command="{Binding LoadScripts}">
+               Rescan script folder
+            </Button>
         </ToolBar>
         
         <DataGrid Grid.Row="1"
                   VerticalAlignment="Stretch"
                   Margin="5,5,5,5"
                   ItemsSource="{Binding Scripts}"
-                  AutoGenerateColumns="True"
+                  AutoGenerateColumns="False"
                   CanUserAddRows="False"
                   CanUserDeleteRows="False"
                   IsReadOnly="True">
-            <!--<DataGrid.Columns>
-                <DataGridTextColumn Header="Script name" Binding="{Binding Name}" Width="*"/>
-                <DataGridTextColumn Header="Interval" Binding="{Binding Interval}" Width="auto" />
-            </DataGrid.Columns>-->
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Script name" Binding="{Binding Name}" Width="auto"/>
+                <DataGridTextColumn Header="Run interval" Binding="{Binding Interval}" Width="auto" />
+                <DataGridTextColumn Header="Script path" Binding="{Binding Path}" Width="auto" />
+                <DataGridTextColumn Header="Last run" Binding="{Binding LastRun, StringFormat=\{0:yyyy-MM-dd HH:mm:ss\}}" Width="auto" />
+            </DataGrid.Columns>
         </DataGrid>
 
         <controls:LogWindow Grid.Row="2"

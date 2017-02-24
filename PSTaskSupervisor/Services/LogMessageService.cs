@@ -17,7 +17,7 @@ namespace PSTaskSupervisor.Services
         {
             if (prependTimestamp)
             {
-                message = $"{DateTime.Now.ToString("yy-MM-dd HH:mm:ss")} - {message}";
+                message = $"{DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")} - {message}";
             }
 
             PushMessage(new LogMessage

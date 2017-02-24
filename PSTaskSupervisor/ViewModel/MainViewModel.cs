@@ -20,7 +20,7 @@ namespace PSTaskSupervisor.ViewModel
                 return new RelayCommand(async () =>
                 {
                     await scriptLocatorService.ScanScriptFolder();
-                    scriptRunnerService.Start();
+                    scriptRunnerService.TryStart();
                 });
             }
         }

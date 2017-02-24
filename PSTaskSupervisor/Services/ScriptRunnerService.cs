@@ -24,11 +24,11 @@ namespace PSTaskSupervisor.Services
             this.scriptLocatorService = scriptLocatorService;
         }
 
-        public void Start()
+        public void TryStart()
         {
             if (workingTask != null)
             {
-                throw new Exception("Script running process already springing");
+                return;
             }
 
             workingTask = Task.Run(async () =>
