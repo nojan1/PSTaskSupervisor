@@ -20,15 +20,19 @@ namespace PSTaskSupervisor.ViewModel
                 return new RelayCommand(async () =>
                 {
                     await scriptLocatorService.ScanScriptFolder();
+                    scriptRunnerService.Start();
                 });
             }
         }
 
-        private ScriptLocatorService scriptLocatorService;
+        private readonly ScriptLocatorService scriptLocatorService;
+        private readonly ScriptRunnerService scriptRunnerService;
 
-        public MainViewModel(ScriptLocatorService scriptLocatorService)
+        public MainViewModel(ScriptLocatorService scriptLocatorService,
+                             ScriptRunnerService scriptRunnerService)
         {
             this.scriptLocatorService = scriptLocatorService;
+            this.scriptRunnerService = scriptRunnerService;
 
             scriptLocatorService.OnScriptsUpdated += x =>
             {

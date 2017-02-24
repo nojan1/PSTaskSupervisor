@@ -82,6 +82,7 @@
     <Compile Include="Model\PowershellScript.cs" />
     <Compile Include="Services\LogMessageService.cs" />
     <Compile Include="Services\ScriptLocatorService.cs" />
+    <Compile Include="Services\ScriptRunnerService.cs" />
     <Compile Include="ViewModel\LogWindowViewModel.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
     <Compile Include="ViewModel\ViewModelLocator.cs" />

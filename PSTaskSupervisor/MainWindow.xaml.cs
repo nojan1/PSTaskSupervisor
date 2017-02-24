@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Windows.Threading;
 
 namespace PSTaskSupervisor
 {
@@ -20,9 +21,16 @@ namespace PSTaskSupervisor
     /// </summary>
     public partial class MainWindow : Window
     {
+        public static Dispatcher RootDispatcher;
+
         public MainWindow()
         {
             InitializeComponent();
+
+            this.Loaded += (s, e) =>
+            {
+                RootDispatcher = this.Dispatcher;
+            };
         }
     }
 }

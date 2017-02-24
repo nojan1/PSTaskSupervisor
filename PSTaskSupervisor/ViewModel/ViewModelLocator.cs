@@ -45,6 +45,7 @@ namespace PSTaskSupervisor.ViewModel
 
             SimpleIoc.Default.Register<LogMessageService>();
             SimpleIoc.Default.Register<ScriptLocatorService>();
+            SimpleIoc.Default.Register<ScriptRunnerService>();
             SimpleIoc.Default.Register<MainViewModel>();
             SimpleIoc.Default.Register<LogWindowViewModel>();
         }
