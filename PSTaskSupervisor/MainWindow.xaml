@@ -40,10 +40,15 @@
                   CanUserDeleteRows="False"
                   IsReadOnly="True">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Script name" Binding="{Binding Name}" Width="auto"/>
-                <DataGridTextColumn Header="Run interval" Binding="{Binding Interval}" Width="auto" />
-                <DataGridTextColumn Header="Script path" Binding="{Binding Path}" Width="auto" />
-                <DataGridTextColumn Header="Last run" Binding="{Binding LastRun, StringFormat=\{0:yyyy-MM-dd HH:mm:ss\}}" Width="auto" />
+                <DataGridTextColumn Header="Script file" Binding="{Binding Path}" Width="*" />
+                <DataGridTextColumn Header="Run interval" Binding="{Binding Interval}" Width="auto">
+                    <DataGridTextColumn.ElementStyle>
+                        <Style TargetType="TextBlock">
+                            <Setter Property="HorizontalAlignment" Value="Center" />
+                        </Style>
+                    </DataGridTextColumn.ElementStyle>
+                </DataGridTextColumn>
+                <DataGridTextColumn Header="Last run" Binding="{Binding LastRun, StringFormat=\{0:yyyy-MM-dd HH:mm:ss\}}" Width="120" />
             </DataGrid.Columns>
         </DataGrid>
 
