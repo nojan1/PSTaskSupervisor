@@ -46,7 +46,7 @@
         </DataGrid>
 
         <controls:LogWindow Grid.Row="2"
-                            Height="150"
+                            Height="220"
                             Margin="5,0,5,5" />
     </Grid>
 </Window>

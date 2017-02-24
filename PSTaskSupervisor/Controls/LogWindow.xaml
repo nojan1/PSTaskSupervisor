@@ -25,7 +25,7 @@
                         <DataTrigger Binding="{Binding Level}" Value="{x:Static models:LogMessageLevel.Warning}">
                         <Setter TargetName="textBlock" Property="Foreground">
                             <Setter.Value>
-                                <SolidColorBrush Color="Yellow" />
+                                <SolidColorBrush Color="Orange" />
                             </Setter.Value>
                         </Setter>
                         </DataTrigger>
