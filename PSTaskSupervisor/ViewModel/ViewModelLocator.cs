@@ -43,8 +43,10 @@ namespace PSTaskSupervisor.ViewModel
             ////    SimpleIoc.Default.Register<IDataService, DataService>();
             ////}
 
+            SimpleIoc.Default.Register<LogMessageService>();
             SimpleIoc.Default.Register<ScriptLocatorService>();
             SimpleIoc.Default.Register<MainViewModel>();
+            SimpleIoc.Default.Register<LogWindowViewModel>();
         }
 
         public MainViewModel Main
@@ -54,7 +56,15 @@ namespace PSTaskSupervisor.ViewModel
                 return ServiceLocator.Current.GetInstance<MainViewModel>();
             }
         }
-        
+
+        public LogWindowViewModel LogWindow
+        {
+            get
+            {
+                return ServiceLocator.Current.GetInstance<LogWindowViewModel>();
+            }
+        }
+
         public static void Cleanup()
         {
             // TODO Clear the ViewModels

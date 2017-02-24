@@ -6,8 +6,9 @@
         xmlns:local="clr-namespace:PSTaskSupervisor"
         xmlns:cmd="clr-namespace:GalaSoft.MvvmLight.Command;assembly=GalaSoft.MvvmLight.Platform"
         xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+        xmlns:controls="clr-namespace:PSTaskSupervisor.Controls"
         mc:Ignorable="d"
-        Title="Powershell Task Supervisor" Height="350" Width="525"
+        Title="Powershell Task Supervisor" Height="600" Width="800"
         DataContext="{Binding Source={StaticResource Locator}, Path=Main}">
 
     <i:Interaction.Triggers>
@@ -21,6 +22,7 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="auto" />
             <RowDefinition Height="*" />
+            <RowDefinition Height="auto" />
         </Grid.RowDefinitions>
 
         <ToolBar Grid.Row="0">
@@ -41,6 +43,10 @@
                 <DataGridTextColumn Header="Script name" Binding="{Binding Name}" Width="*"/>
                 <DataGridTextColumn Header="Interval" Binding="{Binding Interval}" Width="auto" />
             </DataGrid.Columns>-->
-        </DataGrid> 
+        </DataGrid>
+
+        <controls:LogWindow Grid.Row="2"
+                            Height="150"
+                            Margin="5,0,5,5" />
     </Grid>
 </Window>

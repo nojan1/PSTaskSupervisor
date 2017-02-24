@@ -1,0 +1,44 @@
+﻿<UserControl x:Class="PSTaskSupervisor.Controls.LogWindow"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:PSTaskSupervisor.Controls"
+             xmlns:models="clr-namespace:PSTaskSupervisor.Model"
+             mc:Ignorable="d" 
+             d:DesignHeight="150" d:DesignWidth="500"
+             DataContext="{Binding Source={StaticResource Locator}, Path=LogWindow}">
+    <ScrollViewer>
+        <ListView ItemsSource="{Binding LogMessages}">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock Text="{Binding Text}" x:Name="textBlock"/>
+
+                    <DataTemplate.Triggers>
+                        <DataTrigger Binding="{Binding Level}" Value="{x:Static models:LogMessageLevel.Success}">
+                        <Setter TargetName="textBlock" Property="Foreground">
+                            <Setter.Value>
+                                <SolidColorBrush Color="Green" />
+                            </Setter.Value>
+                        </Setter>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding Level}" Value="{x:Static models:LogMessageLevel.Warning}">
+                        <Setter TargetName="textBlock" Property="Foreground">
+                            <Setter.Value>
+                                <SolidColorBrush Color="Yellow" />
+                            </Setter.Value>
+                        </Setter>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding Level}" Value="{x:Static models:LogMessageLevel.Error}">
+                            <Setter TargetName="textBlock" Property="Foreground">
+                                <Setter.Value>
+                                    <SolidColorBrush Color="Red" />
+                                </Setter.Value>
+                            </Setter>
+                        </DataTrigger>
+                    </DataTemplate.Triggers>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+    </ScrollViewer>
+</UserControl>

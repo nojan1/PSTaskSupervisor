@@ -14,6 +14,12 @@ namespace PSTaskSupervisor.Services
 
         public event Action<ICollection<PowershellScript>> OnScriptsUpdated = delegate { };
 
+        private readonly LogMessageService logMessageService;
+        public ScriptLocatorService(LogMessageService logMessageService)
+        {
+            this.logMessageService = logMessageService;
+        }
+
         public async Task ScanScriptFolder()
         {
             var scripts = new List<PowershellScript>();
@@ -45,6 +51,8 @@ namespace PSTaskSupervisor.Services
                     });
                 }
             });
+
+            logMessageService.PushMessage($"Loaded {scripts.Count} scripts", LogMessageLevel.Info);
 
             KnownScripts = scripts;
             OnScriptsUpdated(scripts);
