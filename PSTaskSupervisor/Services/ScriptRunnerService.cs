@@ -7,12 +7,14 @@ using System.Management.Automation;
 using System.Collections.ObjectModel;
 using System.IO;
 using PSTaskSupervisor.Model;
+using System.Threading;
 
 namespace PSTaskSupervisor.Services
 {
     public class ScriptRunnerService
     {
         private static Task workingTask = null;
+        private CancellationTokenSource waitStopTokenSource;
 
         private readonly LogMessageService logMessageService;
         private readonly ScriptLocatorService scriptLocatorService;
@@ -22,6 +24,14 @@ namespace PSTaskSupervisor.Services
         {
             this.logMessageService = logMessageService;
             this.scriptLocatorService = scriptLocatorService;
+        }
+
+        public void ForceRun()
+        {
+            scriptLocatorService.ClearLastRun();
+
+            if(waitStopTokenSource != null)
+                waitStopTokenSource.Cancel();
         }
 
         public void TryStart()
@@ -77,7 +87,10 @@ namespace PSTaskSupervisor.Services
                         }
                     }
 
-                    await Task.Delay(TimeSpan.FromMinutes(1));
+                    try { 
+                        waitStopTokenSource = new CancellationTokenSource();
+                        await Task.Delay(TimeSpan.FromMinutes(1), waitStopTokenSource.Token);
+                    }catch(TaskCanceledException) { }
                 }
 
             });

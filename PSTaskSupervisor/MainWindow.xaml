@@ -29,6 +29,9 @@
             <Button Command="{Binding LoadScripts}">
                Rescan script folder
             </Button>
+            <Button Command="{Binding ForceScriptRun}">
+                Force scripts to run
+            </Button>
         </ToolBar>
         
         <DataGrid Grid.Row="1"

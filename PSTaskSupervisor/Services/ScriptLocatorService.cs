@@ -20,6 +20,15 @@ namespace PSTaskSupervisor.Services
             this.logMessageService = logMessageService;
         }
 
+        public void ClearLastRun()
+        {
+            foreach(var script in KnownScripts)
+            {
+                script.LastRun = null;
+                script.RaisePropertyChanged("LastRun");
+            }
+        }
+
         public async Task ScanScriptFolder()
         {
             var scripts = new List<PowershellScript>();
