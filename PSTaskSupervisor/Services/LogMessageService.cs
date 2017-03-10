@@ -13,8 +13,19 @@ namespace PSTaskSupervisor.Services
 
         private List<LogMessage> backlog = new List<LogMessage>();
 
+        private readonly AlertService alertService;
+        public LogMessageService(AlertService alertService)
+        {
+            this.alertService = alertService;
+        }
+
         public void PushMessage(string message, LogMessageLevel level, bool prependTimestamp = true)
         {
+            if(level == LogMessageLevel.Error)
+            {
+                alertService.Alert();
+            }
+
             if (prependTimestamp)
             {
                 message = $"{DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")} - {message}";

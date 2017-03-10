@@ -52,6 +52,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.configuration" />
     <Reference Include="System.Data" />
     <Reference Include="System.Management.Automation, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -84,6 +85,7 @@
     </Compile>
     <Compile Include="Model\LogMessage.cs" />
     <Compile Include="Model\PowershellScript.cs" />
+    <Compile Include="Services\AlertService.cs" />
     <Compile Include="Services\LogMessageService.cs" />
     <Compile Include="Services\ScriptLocatorService.cs" />
     <Compile Include="Services\ScriptRunnerService.cs" />
@@ -135,7 +137,11 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Content Include="alarm.wav">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
   <ItemGroup>
     <None Include="Scripts\placeholder.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
