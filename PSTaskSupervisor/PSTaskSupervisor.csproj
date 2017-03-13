@@ -83,6 +83,7 @@
     <Compile Include="Controls\LogWindow.xaml.cs">
       <DependentUpon>LogWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\TaskbarItemOverlay.cs" />
     <Compile Include="Model\LogMessage.cs" />
     <Compile Include="Model\PowershellScript.cs" />
     <Compile Include="Services\AlertService.cs" />

@@ -7,17 +7,35 @@
         xmlns:cmd="clr-namespace:GalaSoft.MvvmLight.Command;assembly=GalaSoft.MvvmLight.Platform"
         xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
         xmlns:controls="clr-namespace:PSTaskSupervisor.Controls"
+        xmlns:src="clr-namespace:PSTaskSupervisor.Helpers"
         mc:Ignorable="d"
         Title="Powershell Task Supervisor" Height="600" Width="800"
         DataContext="{Binding Source={StaticResource Locator}, Path=Main}">
-
+  
     <i:Interaction.Triggers>
         <i:EventTrigger EventName="Loaded">
             <cmd:EventToCommand Command="{Binding Mode=OneWay, Path=LoadScripts}"
                             PassEventArgsToCommand="True" />
         </i:EventTrigger>
+        <i:EventTrigger EventName="Activated">
+            <cmd:EventToCommand Command="{Binding Mode=OneWay, Path=ClearAlarm}" />
+        </i:EventTrigger>
     </i:Interaction.Triggers>
 
+    <Window.Resources>
+        <DataTemplate x:Key="AlertOverlay">
+            <Grid Width="16" Height="16" Visibility="{Binding}">
+                <Rectangle Fill="Red"
+                           Stroke="Black" />
+            </Grid>
+        </DataTemplate>
+    </Window.Resources>
+        
+    <Window.TaskbarItemInfo>
+        <TaskbarItemInfo src:TaskbarItemOverlay.Template="{StaticResource AlertOverlay}"
+                         src:TaskbarItemOverlay.Content="{Binding AlertService.AlertPending, Source={StaticResource Locator}, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+    </Window.TaskbarItemInfo>
+    
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="auto" />

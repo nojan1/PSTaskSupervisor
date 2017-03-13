@@ -5,33 +5,50 @@ using System.Text;
 using System.Configuration;
 using System.Threading.Tasks;
 using System.Media;
+using GalaSoft.MvvmLight;
 
 namespace PSTaskSupervisor.Services
 {
-    public class AlertService
+    public class AlertService : ObservableObject
     {
         private static readonly TimeSpan ALERTINTERVAL = TimeSpan.Parse(ConfigurationManager.AppSettings["AlertInterval"]);
 
         private DateTimeOffset? lastAlert;
         private SoundPlayer soundPlayer;
 
+        private bool alertPending;
+        public bool AlertPending { get { return alertPending; } private set { Set(ref alertPending, value); } }
+
         public AlertService()
         {
-            soundPlayer = new SoundPlayer(ConfigurationManager.AppSettings["AlertSoundPath"]);
+            var soundPath = ConfigurationManager.AppSettings["AlertSoundPath"];
+            if (!string.IsNullOrWhiteSpace(soundPath))
+            {
+                soundPlayer = new SoundPlayer(soundPath);
+            }
         }
 
         public void Alert()
         {
-            if(lastAlert == null || lastAlert.Value + ALERTINTERVAL <= DateTimeOffset.Now)
+            if (lastAlert == null || lastAlert.Value + ALERTINTERVAL <= DateTimeOffset.Now)
             {
                 lastAlert = DateTimeOffset.Now;
+                AlertPending = true;
 
                 //ALERT ALERT ALERT ALERT ALERT
-                Task.Run(() =>
+                if (soundPlayer != null)
                 {
-                    soundPlayer.PlaySync();
-                });
+                    Task.Run(() =>
+                    {
+                        soundPlayer.PlaySync();
+                    });
+                }
             }
+        }
+
+        public void ClearAlert()
+        {
+            AlertPending = false;
         }
     }
 }

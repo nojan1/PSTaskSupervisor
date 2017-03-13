@@ -13,6 +13,17 @@ namespace PSTaskSupervisor.ViewModel
         private ObservableCollection<PowershellScript> scripts;
         public ObservableCollection<PowershellScript> Scripts { get { return scripts; } set { Set(ref scripts, value); } }
 
+        public ICommand ClearAlarm
+        {
+            get
+            {
+                return new RelayCommand(() =>
+                {
+                    alertService.ClearAlert();
+                });
+            }
+        }
+
         public ICommand LoadScripts
         {
             get
@@ -37,10 +48,13 @@ namespace PSTaskSupervisor.ViewModel
         }
         private readonly ScriptLocatorService scriptLocatorService;
         private readonly ScriptRunnerService scriptRunnerService;
+        private readonly AlertService alertService;
 
         public MainViewModel(ScriptLocatorService scriptLocatorService,
-                             ScriptRunnerService scriptRunnerService)
+                             ScriptRunnerService scriptRunnerService,
+                             AlertService alertService)
         {
+            this.alertService = alertService;
             this.scriptLocatorService = scriptLocatorService;
             this.scriptRunnerService = scriptRunnerService;
 

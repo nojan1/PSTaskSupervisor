@@ -67,6 +67,14 @@ namespace PSTaskSupervisor.ViewModel
             }
         }
 
+        public AlertService AlertService
+        {
+            get
+            {
+                return ServiceLocator.Current.GetInstance<AlertService>();
+            }
+        }
+
         public static void Cleanup()
         {
             // TODO Clear the ViewModels
