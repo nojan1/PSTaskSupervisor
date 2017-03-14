@@ -142,6 +142,7 @@
     <Content Include="Resources\alarm.wav">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Resource Include="Resources\Images\app-icon.png" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Scripts\placeholder.txt">

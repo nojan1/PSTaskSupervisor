@@ -10,9 +10,10 @@
         xmlns:src="clr-namespace:PSTaskSupervisor.Helpers"
         mc:Ignorable="d"
         Title="Powershell Task Supervisor" Height="600" Width="800"
-        DataContext="{Binding Source={StaticResource Locator}, Path=Main}">
+        DataContext="{Binding Source={StaticResource Locator}, Path=Main}"
+        Icon="Resources/Images/app-icon.png">
   
-    <!--<i:Interaction.Triggers>
+    <i:Interaction.Triggers>
         <i:EventTrigger EventName="Loaded">
             <cmd:EventToCommand Command="{Binding Mode=OneWay, Path=LoadScripts}"
                             PassEventArgsToCommand="True" />
@@ -20,7 +21,7 @@
         <i:EventTrigger EventName="Activated">
             <cmd:EventToCommand Command="{Binding Mode=OneWay, Path=ClearAlarm}" />
         </i:EventTrigger>
-    </i:Interaction.Triggers>-->
+    </i:Interaction.Triggers>
 
     <Window.Resources>
         <DataTemplate x:Key="AlertOverlay">
