@@ -12,7 +12,7 @@
         Title="Powershell Task Supervisor" Height="600" Width="800"
         DataContext="{Binding Source={StaticResource Locator}, Path=Main}">
   
-    <i:Interaction.Triggers>
+    <!--<i:Interaction.Triggers>
         <i:EventTrigger EventName="Loaded">
             <cmd:EventToCommand Command="{Binding Mode=OneWay, Path=LoadScripts}"
                             PassEventArgsToCommand="True" />
@@ -20,7 +20,7 @@
         <i:EventTrigger EventName="Activated">
             <cmd:EventToCommand Command="{Binding Mode=OneWay, Path=ClearAlarm}" />
         </i:EventTrigger>
-    </i:Interaction.Triggers>
+    </i:Interaction.Triggers>-->
 
     <Window.Resources>
         <DataTemplate x:Key="AlertOverlay">
@@ -44,11 +44,13 @@
         </Grid.RowDefinitions>
 
         <ToolBar Grid.Row="0">
-            <Button Command="{Binding LoadScripts}">
-               Rescan script folder
+            <Button Command="{Binding LoadScripts}" 
+                    ToolTip="Rescan script folder">
+                <Image Source="Resources/Images/refresh_all.png" />
             </Button>
-            <Button Command="{Binding ForceScriptRun}">
-                Force scripts to run
+            <Button Command="{Binding ForceScriptRun}"
+                    ToolTip="Force scripts to run">
+                <Image Source="Resources/Images/page_go.png" />
             </Button>
         </ToolBar>
         
