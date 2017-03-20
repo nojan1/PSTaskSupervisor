@@ -46,6 +46,18 @@ namespace PSTaskSupervisor.ViewModel
                 });
             }
         }
+
+        public ICommand ForceSingleScriptRun
+        {
+            get
+            {
+                return new RelayCommand<PowershellScript>((script) =>
+                {
+                    scriptRunnerService.ForceRun(script);
+                });
+            }
+        }
+
         private readonly ScriptLocatorService scriptLocatorService;
         private readonly ScriptRunnerService scriptRunnerService;
         private readonly AlertService alertService;

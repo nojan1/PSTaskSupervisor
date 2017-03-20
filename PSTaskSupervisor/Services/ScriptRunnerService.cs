@@ -28,9 +28,20 @@ namespace PSTaskSupervisor.Services
 
         public void ForceRun()
         {
-            scriptLocatorService.ClearLastRun();
+            ForceRun(null);
+        }
 
-            if(waitStopTokenSource != null)
+        public void ForceRun(PowershellScript script)
+        {
+            if (script == null)
+            {
+                scriptLocatorService.ClearLastRun();
+            }else
+            {
+                scriptLocatorService.ClearLastRun(script);
+            }
+
+            if (waitStopTokenSource != null)
                 waitStopTokenSource.Cancel();
         }
 
@@ -87,10 +98,12 @@ namespace PSTaskSupervisor.Services
                         }
                     }
 
-                    try { 
+                    try
+                    {
                         waitStopTokenSource = new CancellationTokenSource();
                         await Task.Delay(TimeSpan.FromMinutes(1), waitStopTokenSource.Token);
-                    }catch(TaskCanceledException) { }
+                    }
+                    catch (TaskCanceledException) { }
                 }
 
             });

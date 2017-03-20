@@ -30,6 +30,12 @@
                            Stroke="Black" />
             </Grid>
         </DataTemplate>
+
+        <ContextMenu x:Key="ScriptMenu" DataContext="{Binding PlacementTarget.DataContext, RelativeSource={RelativeSource Self}}">
+            <MenuItem Header="Force run" 
+                      Command="{Binding Source={StaticResource Locator}, Path=Main.ForceSingleScriptRun}"
+                      CommandParameter="{Binding}"/>
+        </ContextMenu>
     </Window.Resources>
         
     <Window.TaskbarItemInfo>
@@ -74,6 +80,11 @@
                 </DataGridTextColumn>
                 <DataGridTextColumn Header="Last run" Binding="{Binding LastRun, StringFormat=\{0:yyyy-MM-dd HH:mm:ss\}}" Width="120" />
             </DataGrid.Columns>
+            <DataGrid.RowStyle>
+                <Style TargetType="DataGridRow">
+                    <Setter Property="ContextMenu" Value="{StaticResource ScriptMenu}" />
+                </Style>
+            </DataGrid.RowStyle>
         </DataGrid>
 
         <controls:LogWindow Grid.Row="2"

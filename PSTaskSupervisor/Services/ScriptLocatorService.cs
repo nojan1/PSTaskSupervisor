@@ -29,6 +29,12 @@ namespace PSTaskSupervisor.Services
             }
         }
 
+        public void ClearLastRun(PowershellScript script)
+        {
+            script.LastRun = null;
+            script.RaisePropertyChanged("LastRun");
+        }
+
         public async Task ScanScriptFolder()
         {
             var scripts = new List<PowershellScript>();
