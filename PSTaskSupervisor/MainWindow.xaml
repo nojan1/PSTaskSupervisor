@@ -47,7 +47,8 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="auto" />
             <RowDefinition Height="*" />
-            <RowDefinition Height="auto" />
+            <RowDefinition Height="5" />
+            <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
         <ToolBar Grid.Row="0">
@@ -87,8 +88,14 @@
             </DataGrid.RowStyle>
         </DataGrid>
 
-        <controls:LogWindow Grid.Row="2"
-                            Height="220"
+        <GridSplitter Grid.Row="2"
+                      Height="5"
+                      VerticalAlignment="Top"
+                      HorizontalAlignment="Stretch"
+                      ResizeBehavior="PreviousAndNext"
+                      ResizeDirection="Rows"/>
+
+        <controls:LogWindow Grid.Row="3"
                             Margin="5,0,5,5" />
     </Grid>
 </Window>
