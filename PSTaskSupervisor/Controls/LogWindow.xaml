@@ -9,11 +9,17 @@
              d:DesignHeight="150" d:DesignWidth="500"
              DataContext="{Binding Source={StaticResource Locator}, Path=LogWindow}">
     <ScrollViewer>
+        <ScrollViewer.ContextMenu>
+            <ContextMenu>
+                <MenuItem Header="Clear logview" 
+                      Command="{Binding ClearLog}" />
+            </ContextMenu>
+        </ScrollViewer.ContextMenu>
+
         <ListView ItemsSource="{Binding LogMessages}">
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <TextBlock Text="{Binding Text}" x:Name="textBlock"/>
-
                     <DataTemplate.Triggers>
                         <DataTrigger Binding="{Binding Level}" Value="{x:Static models:LogMessageLevel.Success}">
                         <Setter TargetName="textBlock" Property="Foreground">
@@ -39,6 +45,11 @@
                     </DataTemplate.Triggers>
                 </DataTemplate>
             </ListView.ItemTemplate>
+            <ListView.ItemContainerStyle>
+                <Style TargetType="ListViewItem">
+                    <Setter Property="Focusable" Value="false"/>
+                </Style>
+            </ListView.ItemContainerStyle>
         </ListView>
     </ScrollViewer>
 </UserControl>
