@@ -84,6 +84,9 @@
       <DependentUpon>LogWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Helpers\TaskbarItemOverlay.cs" />
+    <Compile Include="LogMessageDetailWindow.xaml.cs">
+      <DependentUpon>LogMessageDetailWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Model\LogMessage.cs" />
     <Compile Include="Model\PowershellScript.cs" />
     <Compile Include="Services\AlertService.cs" />
@@ -94,6 +97,10 @@
     <Compile Include="ViewModel\MainViewModel.cs" />
     <Compile Include="ViewModel\ViewModelLocator.cs" />
     <Page Include="Controls\LogWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="LogMessageDetailWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

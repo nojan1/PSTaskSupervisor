@@ -8,6 +8,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Controls;
 using System.Windows.Input;
 
 namespace PSTaskSupervisor.ViewModel
@@ -16,17 +17,29 @@ namespace PSTaskSupervisor.ViewModel
     {
         const int MAX_MESSAGES = 100;
 
+        public event EventHandler<LogMessage> OnLogMessageSelected = delegate {};
         public ObservableCollection<LogMessage> LogMessages { get; private set; } = new ObservableCollection<LogMessage>();
 
         public ICommand ClearLog
         {
-            get
-            {
-                return new RelayCommand(() =>
+            get => new RelayCommand(() =>
                 {
                     LogMessages.Clear();
                 });
-            }
+        }
+
+        public ICommand SelectMessage
+        {
+            get => new RelayCommand<SelectionChangedEventArgs>((eventargs) =>
+            {
+                if (eventargs.AddedItems.Count == 0)
+                    return;
+
+                var message = (LogMessage)eventargs.AddedItems[0];
+
+                OnLogMessageSelected(this, message);
+                (new LogMessageDetailWindow() { DataContext = message }).Show();
+            });
         }
 
         public LogWindowViewModel(LogMessageService logMessageService)
@@ -35,7 +48,7 @@ namespace PSTaskSupervisor.ViewModel
             {
                 LogMessages.Insert(0, message);
 
-                if(LogMessages.Count > MAX_MESSAGES)
+                if (LogMessages.Count > MAX_MESSAGES)
                 {
                     LogMessages.RemoveAt(MAX_MESSAGES - 1);
                 }

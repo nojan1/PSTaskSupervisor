@@ -16,7 +16,9 @@ namespace PSTaskSupervisor.Model
 
     public class LogMessage
     {
+        public DateTime Timestamp { get; set; }
         public string Text { get; set; }
+        public string TextWithTimestamp { get => $"{DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")} - {Text}"; }
         public LogMessageLevel Level { get; set; }
     }
 }

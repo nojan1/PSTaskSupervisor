@@ -11,7 +11,7 @@ namespace PSTaskSupervisor.Services
     {
         public event Action<LogMessage> OnMessagePushed = delegate { };
 
-        private List<LogMessage> backlog = new List<LogMessage>();
+        private readonly List<LogMessage> backlog = new List<LogMessage>();
 
         private readonly AlertService alertService;
         public LogMessageService(AlertService alertService)
@@ -19,20 +19,16 @@ namespace PSTaskSupervisor.Services
             this.alertService = alertService;
         }
 
-        public void PushMessage(string message, LogMessageLevel level, bool prependTimestamp = true)
+        public void PushMessage(string message, LogMessageLevel level)
         {
             if(level == LogMessageLevel.Error)
             {
                 alertService.Alert();
             }
 
-            if (prependTimestamp)
-            {
-                message = $"{DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")} - {message}";
-            }
-
             PushMessage(new LogMessage
             {
+                Timestamp = DateTime.Now,
                 Text = message,
                 Level = level
             });

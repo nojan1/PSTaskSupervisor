@@ -3,6 +3,8 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+            xmlns:cmd="clr-namespace:GalaSoft.MvvmLight.Command;assembly=GalaSoft.MvvmLight.Platform"
              xmlns:local="clr-namespace:PSTaskSupervisor.Controls"
              xmlns:models="clr-namespace:PSTaskSupervisor.Model"
              mc:Ignorable="d" 
@@ -17,9 +19,14 @@
         </ScrollViewer.ContextMenu>
 
         <ListView ItemsSource="{Binding LogMessages}">
+            <i:Interaction.Triggers> 
+                <i:EventTrigger EventName="SelectionChanged">
+                    <cmd:EventToCommand Command="{Binding SelectMessage, Mode=OneWay}" PassEventArgsToCommand="True" />
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
             <ListView.ItemTemplate>
                 <DataTemplate>
-                    <TextBlock Text="{Binding Text}" x:Name="textBlock"/>
+                    <TextBlock Text="{Binding TextWithTimestamp}" x:Name="textBlock"/>
                     <DataTemplate.Triggers>
                         <DataTrigger Binding="{Binding Level}" Value="{x:Static models:LogMessageLevel.Success}">
                         <Setter TargetName="textBlock" Property="Foreground">
@@ -45,11 +52,11 @@
                     </DataTemplate.Triggers>
                 </DataTemplate>
             </ListView.ItemTemplate>
-            <ListView.ItemContainerStyle>
+            <!--<ListView.ItemContainerStyle>
                 <Style TargetType="ListViewItem">
                     <Setter Property="Focusable" Value="false"/>
                 </Style>
-            </ListView.ItemContainerStyle>
+            </ListView.ItemContainerStyle>-->
         </ListView>
     </ScrollViewer>
 </UserControl>
