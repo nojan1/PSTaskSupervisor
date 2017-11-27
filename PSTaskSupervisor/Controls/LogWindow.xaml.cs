@@ -24,5 +24,10 @@ namespace PSTaskSupervisor.Controls
         {
             InitializeComponent();
         }
+
+        private void ListViewItem_PreviewMouseRightButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            e.Handled = true;
+        }
     }
 }
