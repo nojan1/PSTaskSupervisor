@@ -1,10 +1,12 @@
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
+using PSTaskSupervisor.Common.Services;
 using PSTaskSupervisor.Model;
 using PSTaskSupervisor.Services;
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using System.Linq;
 
 namespace PSTaskSupervisor.ViewModel
 {
@@ -19,7 +21,7 @@ namespace PSTaskSupervisor.ViewModel
             {
                 return new RelayCommand(() =>
                 {
-                    alertService.ClearAlert();
+                    _alertService.ClearAlert();
                 });
             }
         }
@@ -30,8 +32,8 @@ namespace PSTaskSupervisor.ViewModel
             {
                 return new RelayCommand(async () =>
                 {
-                    await scriptLocatorService.ScanScriptFolder();
-                    scriptRunnerService.TryStart();
+                    await _scriptLocatorService.ScanScriptFolder();
+                    _scriptRunnerService.TryStart();
                 });
             }
         }
@@ -42,7 +44,7 @@ namespace PSTaskSupervisor.ViewModel
             {
                 return new RelayCommand(() =>
                 {
-                    scriptRunnerService.ForceRun();
+                    _scriptRunnerService.ForceRun();
                 });
             }
         }
@@ -53,26 +55,40 @@ namespace PSTaskSupervisor.ViewModel
             {
                 return new RelayCommand<PowershellScript>((script) =>
                 {
-                    scriptRunnerService.ForceRun(script);
+                    _scriptRunnerService.ForceRun(script);
                 });
             }
         }
 
-        private readonly ScriptLocatorService scriptLocatorService;
-        private readonly ScriptRunnerService scriptRunnerService;
-        private readonly AlertService alertService;
+        private readonly IScriptLocatorService _scriptLocatorService;
+        private readonly IScriptRunnerService _scriptRunnerService;
+        private readonly AlertService _alertService;
 
-        public MainViewModel(ScriptLocatorService scriptLocatorService,
-                             ScriptRunnerService scriptRunnerService,
+        public MainViewModel(IScriptLocatorService scriptLocatorService,
+                             IScriptRunnerService scriptRunnerService,
                              AlertService alertService)
         {
-            this.alertService = alertService;
-            this.scriptLocatorService = scriptLocatorService;
-            this.scriptRunnerService = scriptRunnerService;
+            _alertService = alertService;
+            _scriptLocatorService = scriptLocatorService;
+            _scriptRunnerService = scriptRunnerService;
 
-            scriptLocatorService.OnScriptsUpdated += x =>
+            _scriptLocatorService.OnScriptsUpdated += x =>
             {
                 Scripts = new ObservableCollection<PowershellScript>(x);
+            };
+
+            _scriptRunnerService.ScriptRunComplete += x =>
+            {
+                MainWindow.RootDispatcher.Invoke(() =>
+                {
+                    //HACK! This forces update of the LastRun property. Correct way would be to implement INotifyPropertyChanged in derived class.
+                    int index = Scripts.IndexOf(x);
+                    if (index != -1)
+                    {
+                        Scripts.RemoveAt(index);
+                        Scripts.Insert(index, x);
+                    }
+                });
             };
         }
     }

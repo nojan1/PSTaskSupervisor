@@ -9,21 +9,23 @@ using System.IO;
 using PSTaskSupervisor.Model;
 using System.Threading;
 
-namespace PSTaskSupervisor.Services
+namespace PSTaskSupervisor.Common.Services
 {
-    public class ScriptRunnerService
+    public class ScriptRunnerService : IScriptRunnerService
     {
+        public event Action<PowershellScript> ScriptRunComplete = delegate { };
+
         private static Task workingTask = null;
         private CancellationTokenSource waitStopTokenSource;
 
-        private readonly LogMessageService logMessageService;
-        private readonly ScriptLocatorService scriptLocatorService;
+        private readonly IMessageService _logMessageService;
+        private readonly IScriptLocatorService _scriptLocatorService;
 
-        public ScriptRunnerService(LogMessageService logMessageService,
-                                   ScriptLocatorService scriptLocatorService)
+        public ScriptRunnerService(IMessageService logMessageService,
+                                   IScriptLocatorService scriptLocatorService)
         {
-            this.logMessageService = logMessageService;
-            this.scriptLocatorService = scriptLocatorService;
+            _logMessageService = logMessageService;
+            _scriptLocatorService = scriptLocatorService;
         }
 
         public void ForceRun()
@@ -35,10 +37,10 @@ namespace PSTaskSupervisor.Services
         {
             if (script == null)
             {
-                scriptLocatorService.ClearLastRun();
+                _scriptLocatorService.ClearLastRun();
             }else
             {
-                scriptLocatorService.ClearLastRun(script);
+                _scriptLocatorService.ClearLastRun(script);
             }
 
             if (waitStopTokenSource != null)
@@ -56,10 +58,9 @@ namespace PSTaskSupervisor.Services
             {
                 while (true)
                 {
-                    foreach (var script in scriptLocatorService.KnownScripts.Where(s => s.LastRun == null ||
-                                                                                        s.LastRun.Value + s.Interval <= DateTime.Now))
+                    foreach (var script in _scriptLocatorService.KnownScripts.Where(s => s.ShouldRun))
                     {
-                        logMessageService.PushMessage($"Starting script '{script.Name}'", Model.LogMessageLevel.Info);
+                        _logMessageService.PushMessage($"Starting script '{script.Name}'", Model.LogMessageLevel.Info);
 
                         try
                         {
@@ -67,17 +68,17 @@ namespace PSTaskSupervisor.Services
                             {
                                 psInstance.Streams.Error.DataAdded += (s, e) =>
                                 {
-                                    logMessageService.PushMessage(psInstance.Streams.Error.Last().ToString(), LogMessageLevel.Error);
+                                    _logMessageService.PushMessage(psInstance.Streams.Error.Last().ToString(), LogMessageLevel.Error);
                                 };
 
                                 psInstance.Streams.Warning.DataAdded += (s, e) =>
                                 {
-                                    logMessageService.PushMessage(psInstance.Streams.Warning.Last().ToString(), LogMessageLevel.Warning);
+                                    _logMessageService.PushMessage(psInstance.Streams.Warning.Last().ToString(), LogMessageLevel.Warning);
                                 };
 
                                 psInstance.Streams.Information.DataAdded += (s, e) =>
                                 {
-                                    logMessageService.PushMessage(psInstance.Streams.Information.Last().ToString(), LogMessageLevel.Info);
+                                    _logMessageService.PushMessage(psInstance.Streams.Information.Last().ToString(), LogMessageLevel.Info);
                                 };
 
                                 var scriptContent = File.ReadAllText(script.Path);
@@ -85,16 +86,16 @@ namespace PSTaskSupervisor.Services
                                 psInstance.Invoke();
                             }
 
-                            logMessageService.PushMessage($"Script '{script.Name}' completed", Model.LogMessageLevel.Success);
+                            _logMessageService.PushMessage($"Script '{script.Name}' completed", Model.LogMessageLevel.Success);
                         }
                         catch (Exception e)
                         {
-                            logMessageService.PushMessage($"Error running powershell script! {e.Message}", Model.LogMessageLevel.Error);
+                            _logMessageService.PushMessage($"Error running powershell script! {e.Message}", Model.LogMessageLevel.Error);
                         }
                         finally
                         {
                             script.LastRun = DateTime.Now;
-                            script.RaisePropertyChanged("LastRun");
+                            ScriptRunComplete(script);
                         }
                     }
 

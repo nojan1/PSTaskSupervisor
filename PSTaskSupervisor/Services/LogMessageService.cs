@@ -1,4 +1,5 @@
-﻿using PSTaskSupervisor.Model;
+﻿using PSTaskSupervisor.Common.Services;
+using PSTaskSupervisor.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace PSTaskSupervisor.Services
 {
-    public class LogMessageService
+    public class LogMessageService : IMessageService
     {
         public event Action<LogMessage> OnMessagePushed = delegate { };
 

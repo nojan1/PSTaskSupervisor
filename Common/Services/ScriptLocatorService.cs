@@ -6,18 +6,18 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PSTaskSupervisor.Services
+namespace PSTaskSupervisor.Common.Services
 {
-    public class ScriptLocatorService
+    public class ScriptLocatorService : IScriptLocatorService
     {
         public ICollection<PowershellScript> KnownScripts { get; private set; }
 
         public event Action<ICollection<PowershellScript>> OnScriptsUpdated = delegate { };
 
-        private readonly LogMessageService logMessageService;
-        public ScriptLocatorService(LogMessageService logMessageService)
+        private readonly IMessageService _logMessageService;
+        public ScriptLocatorService(IMessageService logMessageService)
         {
-            this.logMessageService = logMessageService;
+            _logMessageService = logMessageService;
         }
 
         public void ClearLastRun()
@@ -25,14 +25,12 @@ namespace PSTaskSupervisor.Services
             foreach(var script in KnownScripts)
             {
                 script.LastRun = null;
-                script.RaisePropertyChanged("LastRun");
             }
         }
 
         public void ClearLastRun(PowershellScript script)
         {
             script.LastRun = null;
-            script.RaisePropertyChanged("LastRun");
         }
 
         public async Task ScanScriptFolder()
@@ -68,7 +66,7 @@ namespace PSTaskSupervisor.Services
                 }
             });
 
-            logMessageService.PushMessage($"Loaded {scripts.Count} scripts", LogMessageLevel.Info);
+            _logMessageService.PushMessage($"Loaded {scripts.Count} scripts", LogMessageLevel.Info);
 
             KnownScripts = scripts;
             OnScriptsUpdated(scripts);

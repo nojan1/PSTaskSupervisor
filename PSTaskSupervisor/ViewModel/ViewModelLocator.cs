@@ -15,6 +15,7 @@
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Ioc;
 using Microsoft.Practices.ServiceLocation;
+using PSTaskSupervisor.Common.Services;
 using PSTaskSupervisor.Services;
 
 namespace PSTaskSupervisor.ViewModel
@@ -32,20 +33,9 @@ namespace PSTaskSupervisor.ViewModel
         {
             ServiceLocator.SetLocatorProvider(() => SimpleIoc.Default);
 
-            ////if (ViewModelBase.IsInDesignModeStatic)
-            ////{
-            ////    // Create design time view services and models
-            ////    SimpleIoc.Default.Register<IDataService, DesignDataService>();
-            ////}
-            ////else
-            ////{
-            ////    // Create run time view services and models
-            ////    SimpleIoc.Default.Register<IDataService, DataService>();
-            ////}
-
-            SimpleIoc.Default.Register<LogMessageService>();
-            SimpleIoc.Default.Register<ScriptLocatorService>();
-            SimpleIoc.Default.Register<ScriptRunnerService>();
+            SimpleIoc.Default.Register<IMessageService, LogMessageService>();
+            SimpleIoc.Default.Register<IScriptLocatorService, ScriptLocatorService>();
+            SimpleIoc.Default.Register<IScriptRunnerService, ScriptRunnerService>();
             SimpleIoc.Default.Register<AlertService>();
             SimpleIoc.Default.Register<MainViewModel>();
             SimpleIoc.Default.Register<LogWindowViewModel>();

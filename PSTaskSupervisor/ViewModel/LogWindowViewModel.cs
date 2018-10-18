@@ -1,5 +1,6 @@
 ﻿using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
+using PSTaskSupervisor.Common.Services;
 using PSTaskSupervisor.Model;
 using PSTaskSupervisor.Services;
 using System;
@@ -42,7 +43,7 @@ namespace PSTaskSupervisor.ViewModel
             });
         }
 
-        public LogWindowViewModel(LogMessageService logMessageService)
+        public LogWindowViewModel(IMessageService logMessageService)
         {
             logMessageService.OnMessagePushed += message =>
             {

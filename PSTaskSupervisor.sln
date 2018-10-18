@@ -1,9 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+# Visual Studio 15
+VisualStudioVersion = 15.0.28010.2046
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PSTaskSupervisor", "PSTaskSupervisor\PSTaskSupervisor.csproj", "{617B6B3D-F6EC-43D0-9C57-7FD2517BB1FF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common", "Common\Common.csproj", "{F1AB5FE4-D3EA-4BD0-A9B5-AD5CB17DE40F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,8 +17,15 @@ Global
 		{617B6B3D-F6EC-43D0-9C57-7FD2517BB1FF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{617B6B3D-F6EC-43D0-9C57-7FD2517BB1FF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{617B6B3D-F6EC-43D0-9C57-7FD2517BB1FF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F1AB5FE4-D3EA-4BD0-A9B5-AD5CB17DE40F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F1AB5FE4-D3EA-4BD0-A9B5-AD5CB17DE40F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F1AB5FE4-D3EA-4BD0-A9B5-AD5CB17DE40F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F1AB5FE4-D3EA-4BD0-A9B5-AD5CB17DE40F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {C822CE97-42F1-4B72-A2D5-162913D1FDC6}
 	EndGlobalSection
 EndGlobal

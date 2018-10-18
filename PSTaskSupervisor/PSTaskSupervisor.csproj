@@ -87,12 +87,8 @@
     <Compile Include="LogMessageDetailWindow.xaml.cs">
       <DependentUpon>LogMessageDetailWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Model\LogMessage.cs" />
-    <Compile Include="Model\PowershellScript.cs" />
     <Compile Include="Services\AlertService.cs" />
     <Compile Include="Services\LogMessageService.cs" />
-    <Compile Include="Services\ScriptLocatorService.cs" />
-    <Compile Include="Services\ScriptRunnerService.cs" />
     <Compile Include="ViewModel\LogWindowViewModel.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
     <Compile Include="ViewModel\ViewModelLocator.cs" />
@@ -159,6 +155,15 @@
   <ItemGroup>
     <Resource Include="Resources\Images\page_go.png" />
     <Resource Include="Resources\Images\refresh_all.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Common\Common.csproj">
+      <Project>{f1ab5fe4-d3ea-4bd0-a9b5-ad5cb17de40f}</Project>
+      <Name>Common</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Model\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
